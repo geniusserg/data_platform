@@ -72,11 +72,12 @@ services:
       - 5672:5672
     network_mode: "host"
 
-  python:
-    image: python:3.12
-    container_name: app_backend
+  kaggle_service:
+    build: ./kaggle_service
+    command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80", "--reload"]
+    ports:
+      - "8000:80"
     volumes:
-      - ./simple_app:/opt/app
-    command: >
-      sh -c 'pip install pika && python /opt/app/try_rabbitmq_consume.py'
-    network_mode: "host"
+      - .:/app
+    environment:
+      - PYTHONUNBUFFERED=1
