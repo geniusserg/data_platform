@@ -1,0 +1,4 @@
+.venv
+kaggle.json
+rabbitmq
+redisdata
